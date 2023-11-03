@@ -1,5 +1,6 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -30,6 +31,13 @@ export default function ButtonLogin() {
           <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
             Form login
           </Typography>
+          <Box py={2}>
+            <Link to="/detail">
+              <Button variant="contained" color="error" fullWidth>
+                Product
+              </Button>
+            </Link>
+          </Box>
         </Box>
       </Modal>
     </>
