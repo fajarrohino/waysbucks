@@ -7,9 +7,9 @@ interface Props {
 }
 export default function Landing({ children }: Props) {
   return (
-    <Stack m={5}>
+    <Stack m={4}>
       <NavbarLogin />
-      <Box margin="0 auto" py={5} width={"90%"}>
+      <Box margin="0 auto" py={2} width={"90%"}>
         {children}
       </Box>
     </Stack>
