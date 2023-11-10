@@ -60,7 +60,7 @@ export default function Detail() {
           <Typography color="#974A4A" sx={{ fontSize: "24px", fontWeight: "800" }} pt={5} pb={2}>
             Toping
           </Typography>
-          <Stack direction={"row"} flexWrap={"wrap"} gap={4} width={"100%"}>
+          <Stack direction={"row"} flexWrap={"wrap"} gap={4}>
             {toping?.map((item) => (
               <CardToping key={item.id} {...item} />
             ))}

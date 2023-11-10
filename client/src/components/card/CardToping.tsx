@@ -3,7 +3,7 @@ import { IToping } from "../../libs/interface/order";
 
 export default function CardToping(props: IToping) {
   return (
-    <Stack alignItems={"center"} spacing={"13px"}>
+    <Stack spacing={"13px"} width={"120px"} display={"flex"} alignItems={"center"}>
       <Avatar
         src={props.picture}
         sx={{
@@ -15,7 +15,7 @@ export default function CardToping(props: IToping) {
           },
         }}
       />
-      <Typography color="#BD0707" sx={{ fontSize: "14px", fontWeight: "400" }} pt={"6px"}>
+      <Typography color="#BD0707" sx={{ fontSize: "14px", fontWeight: "400" }} pt={"6px"} textAlign={"center"}>
         {props.name}
       </Typography>
     </Stack>
