@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
 import { IOrder } from "../../libs/interface/order";
+import { Link } from "react-router-dom";
 
 export default function CardOrder(props: IOrder) {
   return (
@@ -23,9 +24,11 @@ export default function CardOrder(props: IOrder) {
           }}
         />
         <CardContent>
-          <Typography sx={{ fontSize: "18px", fontWeight: "900" }} color={"#BD0707"}>
-            {props.name}
-          </Typography>
+          <Link to={`/order/${props.id}`} style={{ textDecoration: "none" }}>
+            <Typography sx={{ fontSize: "18px", fontWeight: "900" }} color={"#BD0707"}>
+              {props.name}
+            </Typography>
+          </Link>
           <Typography color="#974A4A" sx={{ fontSize: "14px", fontWeight: "400" }} pt={"6px"}>
             Rp. {props.price}
           </Typography>

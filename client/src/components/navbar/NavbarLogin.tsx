@@ -6,7 +6,9 @@ import waysbucks from "../../assets/svg/logo.svg";
 export default function NavbarLogin() {
   return (
     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-      <Avatar src={waysbucks} sx={{ width: 80, height: 80 }} />
+      <Link to="/">
+        <Avatar src={waysbucks} sx={{ width: 80, height: 80 }} />
+      </Link>
       <Box sx={{ display: "flex", gap: 5, alignItems: "center" }}>
         <Link to="/cart">
           <img src={cart} width={30} height={30} />
