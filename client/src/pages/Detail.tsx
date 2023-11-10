@@ -19,7 +19,7 @@ export default function Detail() {
         const response = await fetch("https://api.npoint.io/c53fb9c69e3638e406a6");
         const data = await response.json();
         const orderId = data.findIndex((order: IOrder) => order.id === Number(id));
-        // setOrder(orderId);
+
         console.log("this fetch data order", orderId);
 
         if (orderId !== -1) {
@@ -43,7 +43,9 @@ export default function Detail() {
         console.log("fetch toping error", error);
       }
     };
-    fetchOrder(), fetchToping();
+
+    fetchOrder();
+    fetchToping();
   }, [id]);
 
   return (
