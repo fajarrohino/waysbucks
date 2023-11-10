@@ -11,16 +11,23 @@ export default function Detail() {
   const [order, setOrder] = useState<IOrder[]>([]);
   const [toping, setToping] = useState<IToping[]>([]);
 
-  const {id} = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const response = await fetch("https://api.npoint.io/c53fb9c69e3638e406a6");
         const data = await response.json();
-        const orderId = data.map((order) => )
-        setOrder(data);
-        console.log("this fetch data order", data);
+        const orderId = data.findIndex((order: IOrder) => order.id === Number(id));
+        // setOrder(orderId);
+        console.log("this fetch data order", orderId);
+
+        if (orderId !== -1) {
+          setOrder([data[orderId]]);
+          console.log("this data by ID :", data[orderId]);
+        } else {
+          console.log("not found");
+        }
       } catch (error) {
         console.log("fetch error", error);
       }
@@ -37,18 +44,18 @@ export default function Detail() {
       }
     };
     fetchOrder(), fetchToping();
-  }, []);
+  }, [id]);
 
   return (
     <Landing>
       <Stack display={"flex"} direction={"row"} gap={10}>
-        <CardPicture />
+        <CardPicture picture={order.length > 0 && order[0].picture} />
         <Box width={"576px"}>
           <Typography sx={{ fontSize: "48px", fontWeight: "900" }} color={"#BD0707"} pb={2}>
-            {/* {order[0].name} */} name
+            {order.length > 0 && order[0].name}
           </Typography>
           <Typography color="#974A4A" sx={{ fontSize: "24px", fontWeight: "400" }}>
-            {/* {order[0].price} */} harga
+            Rp. {order.length > 0 && order[0].price}
           </Typography>
           <Typography color="#974A4A" sx={{ fontSize: "24px", fontWeight: "800" }} pt={5} pb={2}>
             Toping
