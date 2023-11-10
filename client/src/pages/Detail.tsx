@@ -70,7 +70,7 @@ export default function Detail() {
               Total
             </Typography>
             <Typography color="#974A4A" sx={{ fontSize: "24px", fontWeight: "900" }}>
-              Rp.27.000
+              Rp. 27.000
             </Typography>
           </Box>
           <ButtonAddCart />
