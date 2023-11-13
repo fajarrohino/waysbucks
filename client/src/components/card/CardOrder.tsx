@@ -4,7 +4,7 @@ import { IOrder } from "../../libs/interface/order";
 
 export default function CardOrder(props: Readonly<IOrder>) {
   return (
-    <Card sx={{ maxWidth: "241px", maxHeight: "392px" }}>
+    <Card sx={{ maxWidth: "241px", maxHeight: "392px", m: "10px" }}>
       <CardActionArea sx={{ backgroundColor: "#F6DADA" }}>
         <CardMedia component={"img"} image={props.picture} sx={{ borderRadius: "10px", objectFit: "cover", width: "241px", height: "312px" }} />
         <CardContent>

@@ -22,7 +22,7 @@ export default function Home() {
       <Typography sx={{ fontSize: "36px", fontWeight: "900" }} color={"#BD0707"} py={3}>
         Let's Order
       </Typography>
-      <Stack gap={3} display={"flex"} flexWrap={"wrap"} flexDirection={"row"}>
+      <Stack display={"flex"} flexWrap={"wrap"} flexDirection={"row"} justifyContent={"space-between"}>
         {stateOrder.loading ? <Typography>Loading...</Typography> : stateOrder.data?.map((item) => <CardOrder key={item.id} {...item} />)}
       </Stack>
     </LandingHome>
