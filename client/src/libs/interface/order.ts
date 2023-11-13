@@ -3,6 +3,7 @@ export interface IOrder {
   name: string;
   picture: string;
   price: number;
+  loading: boolean;
 }
 
 export interface IToping {

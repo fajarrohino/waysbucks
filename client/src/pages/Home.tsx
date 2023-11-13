@@ -16,9 +16,6 @@ export default function Home() {
     dispatch(getOrder());
   }, []);
 
-  if (stateOrder.loading) {
-    return <Typography>Loading...</Typography>;
-  }
   return (
     <LandingHome>
       <Jumbotron />
@@ -27,7 +24,7 @@ export default function Home() {
       </Typography>
       <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 3, sm: 10 }} p={1} sx={{ alignItems: "center" }}>
         {stateOrder.data?.map((item) => (
-          <CardOrder key={item.id} {...item} />
+          <CardOrder key={item.id} {...item} loading={stateOrder.loading} />
         ))}
       </Stack>
     </LandingHome>
