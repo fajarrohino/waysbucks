@@ -1,26 +1,24 @@
 import { Stack, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Jumbotron from "../components/Jumbotron";
-import LandingHome from "../layouts/LandingHome";
 import CardOrder from "../components/card/CardOrder";
-import { IOrder } from "../libs/interface/order";
-import { useEffect, useState } from "react";
+import LandingHome from "../layouts/LandingHome";
+import { RootState } from "../store";
+import { getOrder } from "../store/order/action";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 
 export default function Home() {
-  const [order, setOrder] = useState<IOrder[]>([]);
+  const stateOrder = useSelector((state: RootState) => state.order);
+  const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const response = await fetch("https://api.npoint.io/c53fb9c69e3638e406a6");
-        const data = await response.json();
-        console.log("this data order", data);
-        setOrder(data);
-      } catch (error) {
-        console.log("fetch error", error);
-      }
-    };
-    fetchOrder();
+    dispatch(getOrder());
   }, []);
+
+  if (stateOrder.loading) {
+    return <Typography>Loading...</Typography>;
+  }
   return (
     <LandingHome>
       <Jumbotron />
@@ -28,7 +26,7 @@ export default function Home() {
         Let's Order
       </Typography>
       <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 3, sm: 10 }} p={1} sx={{ alignItems: "center" }}>
-        {order?.map((item) => (
+        {stateOrder.data?.map((item) => (
           <CardOrder key={item.id} {...item} />
         ))}
       </Stack>
