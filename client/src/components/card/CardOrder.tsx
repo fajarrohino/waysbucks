@@ -2,10 +2,7 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/m
 import { IOrder } from "../../libs/interface/order";
 import { Link } from "react-router-dom";
 
-export default function CardOrder(props: IOrder) {
-  if (props.loading) {
-    return <Typography>Loading...</Typography>;
-  }
+export default function CardOrder(props: Readonly<IOrder>) {
   return (
     <Card sx={{ maxWidth: { xs: "100%", sm: "242px", md: "241px" }, maxHeight: { xs: "100%", sm: 392, md: 392 } }}>
       <CardActionArea sx={{ backgroundColor: "#F6DADA" }}>

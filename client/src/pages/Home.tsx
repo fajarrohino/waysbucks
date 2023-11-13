@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getOrder());
-  }, []);
+  }, [dispatch]);
 
   return (
     <LandingHome>
@@ -23,9 +23,7 @@ export default function Home() {
         Let's Order
       </Typography>
       <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 3, sm: 10 }} p={1} sx={{ alignItems: "center" }}>
-        {stateOrder.data?.map((item) => (
-          <CardOrder key={item.id} {...item} loading={stateOrder.loading} />
-        ))}
+        {stateOrder.loading ? <Typography>Loading...</Typography> : stateOrder.data?.map((item) => <CardOrder key={item.id} {...item} />)}
       </Stack>
     </LandingHome>
   );
