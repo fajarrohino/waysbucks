@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import orderReducer from "./order/reducer";
+import topingReducer from "./toping/reducer";
 
 export const store = configureStore({
   reducer: {
     order: orderReducer,
+    toping: topingReducer,
   },
 });
 

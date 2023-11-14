@@ -33,5 +33,6 @@ const orderSlice = createSlice({
     });
   },
 });
+
 export const { getOrderById } = orderSlice.actions;
 export default orderSlice.reducer;

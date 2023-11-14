@@ -1,41 +1,35 @@
+import { Box, Stack, Typography } from "@mui/material";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Landing from "../layouts/Landing";
-import { IToping } from "../libs/interface/order";
-import { RootState } from "../store";
-import { Stack, Box, Typography } from "@mui/material";
 import ButtonAddCart from "../components/button/ButtonAddCart";
 import CardPicture from "../components/card/CardPicture";
 import CardToping from "../components/card/CardToping";
+import Landing from "../layouts/Landing";
+import { RootState } from "../store";
 import { getOrderById } from "../store/order/reducer";
+import { getToping } from "../store/toping/action";
+import { IToping } from "../libs/interface/order";
 
 export default function Detail() {
-  const [toping, setToping] = useState<IToping[]>([]);
+  // const [toping, setToping] = useState<IToping[]>([]);
 
   const { id } = useParams();
 
   const stateOrder = useSelector((state: RootState) => state.order);
   const stateOrderById = stateOrder.data?.find((order) => order.id === Number(id));
-  const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
+  const dispatchOrder: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
 
   console.log("this is state order by id", stateOrderById);
 
-  useEffect(() => {
-    dispatch(getOrderById(Number(id)));
-    const fetchToping = async () => {
-      try {
-        const response = await fetch("https://api.npoint.io/6ee29807c464e0cd7e0e");
-        const data = await response.json();
-        setToping(data);
-        console.log("this fetch data toping", data);
-      } catch (error) {
-        console.log("fetch toping error", error);
-      }
-    };
+  const stateToping = useSelector((state: RootState) => state.toping);
+  const dispatchToping: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
 
-    fetchToping();
+  useEffect(() => {
+    dispatchOrder(getOrderById(Number(id)));
+
+    dispatchToping(getToping());
   }, [id]);
 
   return (
@@ -53,7 +47,7 @@ export default function Detail() {
             Toping
           </Typography>
           <Stack direction={"row"} flexWrap={"wrap"} gap={4}>
-            {toping?.map((item) => (
+            {stateToping.data?.map((item: IToping) => (
               <CardToping key={item.id} {...item} />
             ))}
           </Stack>
