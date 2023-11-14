@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { IOrder } from "../../libs/interface/order";
 
-export default function CardPicture(props: IOrder) {
+export default function CardPicture(props: Readonly<IOrder>) {
   return (
     <Box
       sx={{

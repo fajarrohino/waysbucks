@@ -15,7 +15,12 @@ const initialState: IOrderState = {
 const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    getOrderById: (state, action) => {
+      const orderById = action.payload;
+      state.data?.findIndex((order) => order.id === orderById);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getOrder.pending, (state) => {
       state.loading = true;
@@ -28,5 +33,5 @@ const orderSlice = createSlice({
     });
   },
 });
-
+export const { getOrderById } = orderSlice.actions;
 export default orderSlice.reducer;

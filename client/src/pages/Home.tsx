@@ -12,6 +12,7 @@ export default function Home() {
   const stateOrder = useSelector((state: RootState) => state.order);
   const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
 
+  console.log(stateOrder);
   useEffect(() => {
     dispatch(getOrder());
   }, [dispatch]);

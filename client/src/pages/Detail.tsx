@@ -1,38 +1,29 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Landing from "../layouts/Landing";
+import { IToping } from "../libs/interface/order";
+import { RootState } from "../store";
+import { Stack, Box, Typography } from "@mui/material";
+import ButtonAddCart from "../components/button/ButtonAddCart";
 import CardPicture from "../components/card/CardPicture";
 import CardToping from "../components/card/CardToping";
-import ButtonAddCart from "../components/button/ButtonAddCart";
-import { IOrder, IToping } from "../libs/interface/order";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { getOrderById } from "../store/order/reducer";
 
 export default function Detail() {
-  const [order, setOrder] = useState<IOrder[]>([]);
   const [toping, setToping] = useState<IToping[]>([]);
 
   const { id } = useParams();
 
+  const stateOrder = useSelector((state: RootState) => state.order);
+  const stateOrderById = stateOrder.data?.find((order) => order.id === Number(id));
+  const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
+
+  console.log("this is state order by id", stateOrderById);
+
   useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const response = await fetch("https://api.npoint.io/c53fb9c69e3638e406a6");
-        const data = await response.json();
-        const orderId = data.findIndex((order: IOrder) => order.id === Number(id));
-
-        console.log("this fetch data order", orderId);
-
-        if (orderId !== -1) {
-          setOrder([data[orderId]]);
-          console.log("this data by ID :", data[orderId]);
-        } else {
-          console.log("not found");
-        }
-      } catch (error) {
-        console.log("fetch error", error);
-      }
-    };
-
+    dispatch(getOrderById(Number(id)));
     const fetchToping = async () => {
       try {
         const response = await fetch("https://api.npoint.io/6ee29807c464e0cd7e0e");
@@ -44,20 +35,19 @@ export default function Detail() {
       }
     };
 
-    fetchOrder();
     fetchToping();
   }, [id]);
 
   return (
     <Landing>
       <Stack display={"flex"} direction={"row"} gap={10}>
-        <CardPicture picture={order.length > 0 && order[0].picture} />
+        <CardPicture picture={stateOrderById?.picture} />
         <Box width={"576px"}>
           <Typography sx={{ fontSize: "48px", fontWeight: "900" }} color={"#BD0707"} pb={2}>
-            {order.length > 0 && order[0].name}
+            {stateOrderById?.name}
           </Typography>
           <Typography color="#974A4A" sx={{ fontSize: "24px", fontWeight: "400" }}>
-            Rp. {order.length > 0 && order[0].price}
+            Rp. {stateOrderById?.price}
           </Typography>
           <Typography color="#974A4A" sx={{ fontSize: "24px", fontWeight: "800" }} pt={5} pb={2}>
             Toping
