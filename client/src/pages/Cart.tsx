@@ -5,6 +5,13 @@ import FormCart from "../components/form/FormCart";
 import Landing from "../layouts/Landing";
 
 export default function Cart() {
+  // const stateOrder = useSelector((state: RootState) => state.order);
+  // const dispatch: ThunkDispatch<RootState, undefined, AnyAction> = useDispatch();
+
+  // console.log(stateOrder);
+  // useEffect(() => {
+  //   dispatch(getOrder());
+  // }, [dispatch]);
   return (
     <Landing>
       {/* <Box bgcolor={"aqua"}> */}
