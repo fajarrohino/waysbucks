@@ -1,4 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "./Product";
+import { Cart } from "./Cart";
+import { Invoice } from "./Invoice";
+import { Payment } from "./Payment";
 
 @Entity({ name: "users" })
 export class User {
@@ -6,11 +10,47 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  name: string;
 
   @Column()
-  lastName: string;
+  username: string;
 
   @Column()
-  age: number;
+  email: string;
+
+  @Column()
+  picture: string;
+
+  @Column()
+  phoneNumber: number;
+
+  @OneToMany(() => Product, (product) => product.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  products: Product[];
+
+  @OneToMany(() => Cart, (cart) => cart.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  carts: Cart[];
+
+  @OneToMany(() => Invoice, (invoice) => invoice.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  invoices: Invoice[];
+
+  @OneToMany(() => Payment, (payment) => payment.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  payments: Payment[];
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  createAt: Date;
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  updateAt: Date;
 }
