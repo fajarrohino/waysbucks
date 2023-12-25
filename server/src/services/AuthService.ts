@@ -65,7 +65,7 @@ class AuthService {
 
       const checkUser = await this.authRepository.findOne({
         where: { email },
-        select: ["id", "name", "password"],
+        select: ["id", "name", "username", "password"],
       });
       if (!checkUser) {
         return res.status(400).json({
@@ -93,7 +93,34 @@ class AuthService {
         token: token,
       });
     } catch (error) {
-      return res.status(500).json("There's an error");
+      return res.status(500).json({
+        message: "login is error",
+        error,
+      });
+    }
+  }
+
+  async check(req: Request, res: Response) {
+    try {
+      const loginSession = res.locals.loginSession;
+
+      // console.log("login session: ", loginSession);
+
+      const user = await this.authRepository.findOne({
+        where: {
+          id: loginSession.checkUser.id,
+        },
+        select: ["id", "name", "username", "password"],
+      });
+      return res.status(200).json({
+        message: "The token is valid!",
+        user,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "check token is error",
+        error,
+      });
     }
   }
 }
