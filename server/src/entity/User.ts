@@ -18,11 +18,14 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   picture: string;
 
   @Column()
-  phoneNumber: number;
+  phoneNumber: string;
+
+  @Column({ select: false })
+  password: string;
 
   @OneToMany(() => Product, (product) => product.user, {
     onDelete: "CASCADE",
