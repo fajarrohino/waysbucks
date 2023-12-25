@@ -7,3 +7,8 @@ export const registerShcema = joi.object().keys({
   password: joi.string().required(),
   email: joi.string().email().required(),
 });
+
+export const loginShcema = joi.object().keys({
+  password: joi.string().required(),
+  email: joi.string().email().required(),
+});

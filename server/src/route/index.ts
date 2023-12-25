@@ -10,5 +10,6 @@ router.get("/", (req: Request, res: Response) => {
 
 // auth
 router.post("/auth/reqister", AuthController.register);
+router.post("/auth/login", AuthController.login);
 
 export default router;

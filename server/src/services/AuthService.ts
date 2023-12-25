@@ -2,8 +2,9 @@ import { Repository } from "typeorm";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
 import { Request, Response } from "express";
-import { registerShcema } from "../utils/validator/auth";
+import { loginShcema, registerShcema } from "../utils/validator/auth";
 import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
 
 class AuthService {
   private readonly authRepository: Repository<User> = AppDataSource.getRepository(User);
@@ -47,6 +48,52 @@ class AuthService {
         message: "Register Error. Plase try again!",
         error: error.message,
       });
+    }
+  }
+
+  async login(req: Request, res: Response) {
+    const sicret = "eannoy";
+    try {
+      const { email, password } = req.body;
+      const { error } = loginShcema.validate(req.body);
+
+      if (error) {
+        return res.status(400).json({
+          message: "email and password invalid!",
+        });
+      }
+
+      const checkUser = await this.authRepository.findOne({
+        where: { email },
+        select: ["id", "name", "password"],
+      });
+      if (!checkUser) {
+        return res.status(400).json({
+          message: "email invalid!",
+        });
+      }
+
+      const checkPassword = await bcrypt.compare(password, checkUser.password);
+      if (!checkPassword) {
+        return res.status(400).json({
+          message: "password invalid!",
+        });
+      }
+      const token = jwt.sign({ checkUser }, sicret, {
+        expiresIn: "2h",
+      });
+
+      return res.status(200).json({
+        message: "login is success!",
+        user: {
+          id: checkUser.id,
+          username: checkUser.username,
+          email: checkUser.email,
+        },
+        token: token,
+      });
+    } catch (error) {
+      return res.status(500).json("There's an error");
     }
   }
 }
